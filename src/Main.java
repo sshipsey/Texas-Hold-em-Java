@@ -6,83 +6,77 @@ public class Main {
 
 	@SuppressWarnings("unused")
 	public static void main(String args[]) {
-		
+		int i;
 		int numPlayers = 4;
+		int smallBlind = 100;
+		int blindPosition = 1;
 		
+		
+		ArrayList<Player> players = new ArrayList<Player>();
+		
+		for(i=0;i<numPlayers;i++)
+			players.add(new Player(null));
+		
+		
+		ArrayList<Card> tableCards = new ArrayList<Card>();
+		
+		Table table = new Table(players,smallBlind,blindPosition);
 		Deck deck = new Deck();
         deck.shuffle();
         
         
-        // This should be an array of players not 5 variables!!!
-		Card[] p1hand = new Card[2];
-		Card[] p2hand = new Card[2];
-		Card[] p3hand = new Card[2];
-		Card[] p4hand = new Card[2];
-		Card[] p5hand = new Card[2];
-
-		for (int i = 0; i < 2; i++)
-		{
-			p1hand[i] = deck.getNext();
-			p2hand[i] = deck.getNext();
-			p3hand[i] = deck.getNext();
-			p4hand[i] = deck.getNext();
-			p5hand[i] = deck.getNext();
-		}
+        //deal
+        for (i=0;i<2;i++)
+        	for(Player player : players)
+        		player.deal(deck.getNext());
+        	
 
 		System.out.println("Hands:" + "\n" + "-----------");
-		System.out.println("Player 1 has " + p1hand[0] + " and " + p1hand[1]);
-		System.out.println("Player 2 has " + p2hand[0] + " and " + p2hand[1]);
-		System.out.println("Player 3 has " + p3hand[0] + " and " + p3hand[1]);
-		System.out.println("Player 4 has " + p4hand[0] + " and " + p4hand[1]);
-		System.out.println("Player 5 has " + p5hand[0] + " and " + p5hand[1]);
+		
+		for(i=0; i < players.size(); ++i)
+		System.out.println("Player " + i + " has " + players.get(i).getCard(0) + " " + players.get(i).getCard(1));
+
 
 		System.out.println("\n"+"\n");
 		sleep();
 		System.out.println("\n" + "Round of betting.." + "\n");
 		sleep();
 		System.out.println("Here Comes the Flop!");
+		
 		//FLOP*********************************************************************
 		sleep();
+		sleep();
 		
+		tableCards = table.flop(deck);
 		
-		Card[] tableCards = new Card[5];
-		tableCards = deck.flop(deck);
-
-		System.out.print("" + tableCards[0]);
+		System.out.println(tableCards.toString());
+		
 		sleep();
-		System.out.print("   " + tableCards[1]);
 		sleep();
-		System.out.println("   " + tableCards[2]);
-		sleep();
+		
 		System.out.println("\n" + "Round of betting.." + "\n");
 		sleep();
 		
 		//TURN*********************************************************************
-		tableCards[3] = deck.turn(deck);
+		tableCards.add(table.turn(deck));
 		
 		System.out.println("The Turn");
 		sleep();
-		System.out.print("" + tableCards[0]);
-		System.out.print("   " + tableCards[1]);
-		System.out.print("   " + tableCards[2]);
 		sleep();
-		System.out.println("   " + tableCards[3]);
+		System.out.println(tableCards.toString());
+		
 		sleep();
 		System.out.println("\n" + "Round of betting.." + "\n");
 		sleep();	
 		
 		//RIVER*********************************************************************
-
+		tableCards.add(table.river(deck));
+		
 		System.out.println("The River");
 		sleep();
-		System.out.print("" + tableCards[0]);
-		System.out.print("   " + tableCards[1]);
-		System.out.print("   " + tableCards[2]);
-		System.out.print("   " + tableCards[3]);
 		sleep();
+		System.out.println(tableCards.toString());
 
-		tableCards[4] = deck.river(deck);
-		System.out.println("   " + tableCards[4]);
 		sleep();
 		System.out.println("\n" + "Round of betting.." + "\n");
 		sleep();
