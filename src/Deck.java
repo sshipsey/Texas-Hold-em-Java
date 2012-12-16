@@ -29,8 +29,11 @@ public class Deck {
 
 	private void makeDeck() {
         for (Card.Suit suit : Card.Suit.values())
-            for (int i = 0; i < 14; ++i)
+            for (int i = 1; i <= 14; ++i)
                 m_cards.add(new Card(i, suit));
 	}
+<<<<<<< HEAD
 
+=======
+>>>>>>> b413124324d26077e5b6be83bc7493a8882d5c8a
 }
