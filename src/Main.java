@@ -6,9 +6,13 @@ public class Main {
 
 	@SuppressWarnings("unused")
 	public static void main(String args[]) {
+		
+		int numPlayers = 4;
+		
 		Deck deck = new Deck();
         deck.shuffle();
-
+        
+        
         // This should be an array of players not 5 variables!!!
 		Card[] p1hand = new Card[2];
 		Card[] p2hand = new Card[2];
@@ -16,7 +20,6 @@ public class Main {
 		Card[] p4hand = new Card[2];
 		Card[] p5hand = new Card[2];
 
-		int numPlayers = 5;
 		for (int i = 0; i < 2; i++)
 		{
 			p1hand[i] = deck.getNext();
@@ -34,69 +37,63 @@ public class Main {
 		System.out.println("Player 5 has " + p5hand[0] + " and " + p5hand[1]);
 
 		System.out.println("\n"+"\n");
-
-		sleep(2000);
-
+		sleep();
 		System.out.println("\n" + "Round of betting.." + "\n");
-
-		sleep(2000);
+		sleep();
 		System.out.println("Here Comes the Flop!");
-
-		//flop
-		sleep(2000);
+		//FLOP*********************************************************************
+		sleep();
+		
+		
 		Card[] tableCards = new Card[5];
+		tableCards = deck.flop(deck);
 
-		tableCards[0] = deck.getNext();
 		System.out.print("" + tableCards[0]);
-		sleep(2000);
-		tableCards[1] = deck.getNext();
+		sleep();
 		System.out.print("   " + tableCards[1]);
-		sleep(2000);
-		tableCards[2] = deck.getNext();
+		sleep();
 		System.out.println("   " + tableCards[2]);
-
-		sleep(2000);
-
+		sleep();
 		System.out.println("\n" + "Round of betting.." + "\n");
-
-		sleep(2000);
-
+		sleep();
+		
+		//TURN*********************************************************************
+		tableCards[3] = deck.turn(deck);
+		
 		System.out.println("The Turn");
-		sleep(2000);
+		sleep();
 		System.out.print("" + tableCards[0]);
 		System.out.print("   " + tableCards[1]);
 		System.out.print("   " + tableCards[2]);
-		sleep(2000);
-
-		tableCards[3] = deck.getNext();
+		sleep();
 		System.out.println("   " + tableCards[3]);
-
-		sleep(2000);
+		sleep();
 		System.out.println("\n" + "Round of betting.." + "\n");
-
-		sleep(2000);
+		sleep();	
+		
+		//RIVER*********************************************************************
 
 		System.out.println("The River");
-		sleep(2000);
+		sleep();
 		System.out.print("" + tableCards[0]);
 		System.out.print("   " + tableCards[1]);
 		System.out.print("   " + tableCards[2]);
 		System.out.print("   " + tableCards[3]);
-		sleep(2000);
+		sleep();
 
-		tableCards[4] = deck.getNext();
+		tableCards[4] = deck.river(deck);
 		System.out.println("   " + tableCards[4]);
-		sleep(2000);
-
+		sleep();
 		System.out.println("\n" + "Round of betting.." + "\n");
-		sleep(2000);
+		sleep();
 		System.out.println("Results:" + "\n" + "blah blah blah");
 	}
 
-	public static void sleep(long n)
+	public static void sleep()
 	{
 		try {
-            Thread.currentThread().sleep(n);
+            Thread.currentThread().sleep(1000);
 		} catch(Exception e){}
 	}
+	
 }
