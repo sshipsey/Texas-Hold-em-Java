@@ -29,33 +29,7 @@ public class Deck {
 
 	private void makeDeck() {
         for (Card.Suit suit : Card.Suit.values())
-            for (int i = 0; i < 14; ++i)
+            for (int i = 1; i <= 14; ++i)
                 m_cards.add(new Card(i, suit));
-	}
-	
-	Card[] flop = new Card[5];
-	public Card[] flop(Deck deck)
-	{
-		flop[0] = deck.getNext();
-		flop[1] = deck.getNext();
-		flop[2] = deck.getNext();
-		return flop;
-	}
-	
-	Card burn;
-	Card turn;
-	public Card turn(Deck deck)
-	{
-		burn = deck.getNext();
-		turn = deck.getNext();
-		return turn;
-	}
-	
-	Card river;
-	public Card river(Deck deck)
-	{
-		burn = deck.getNext();
-		river = deck.getNext();
-		return river;
 	}
 }

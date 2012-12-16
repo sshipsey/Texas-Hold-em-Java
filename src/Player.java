@@ -1,30 +1,34 @@
+import java.util.ArrayList;
 
 public class Player {
-	
-	private int pNum;
-	private Card[] hand = new Card[2];
-	private Card[] fullHand = new Card[5];
-	private Player[] players;
-	public Player(int a, Card[] b)
-	{
-		pNum = a;
-		hand = b;
-		
+
+    private String m_name;
+    private int m_bank;
+    private ArrayList<Card> m_hand;
+
+	public Player(String name) {
+		m_name = name;
+        m_bank = 0;
+        m_hand = new ArrayList<Card>();
 	}
-	public Player[] seatPlayers(int numPlayers)
-	{
-		for(int i=0;i<numPlayers;i++)
-		{
-			players[i] = new Player(i+1,//fuck)
-		}
-		return players;
-	}
-	
-	public Card[] getHand(Player p)
-	{
-		
-		
-		
-		return fullHand;
-	}
+
+    public void addBank(int n) {
+        m_bank += n;
+    }
+
+    public void removeBank(int n) {
+        m_bank -= n;
+    }
+
+    public int getBank() {
+        return m_bank;
+    }
+
+    public void deal(Card card) {
+        m_hand.add(card);
+    }
+
+    public ArrayList<Card> getHand() {
+        return m_hand;
+    }
 }
