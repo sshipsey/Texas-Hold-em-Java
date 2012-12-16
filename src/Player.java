@@ -31,13 +31,10 @@ public class Player {
     public ArrayList<Card> getHand() {
         return m_hand;
     }
-<<<<<<< HEAD
     
     public Card getCard(int i)
     {
     	return m_hand.get(i);
     }
 }
-=======
-}
->>>>>>> b413124324d26077e5b6be83bc7493a8882d5c8a
+
