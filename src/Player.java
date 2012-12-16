@@ -6,11 +6,11 @@ public class Player {
     private int m_bank;
     private ArrayList<Card> m_hand;
 
-	public Player(String name) {
-		m_name = name;
+    public Player(String name) {
+        m_name = name;
         m_bank = 0;
         m_hand = new ArrayList<Card>();
-	}
+    }
 
     public void addBank(int n) {
         m_bank += n;
