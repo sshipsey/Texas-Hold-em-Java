@@ -7,6 +7,8 @@ public class Main {
 	@SuppressWarnings("unused")
 	public static void main(String args[]) {
 		int i;
+		int turn;
+		int bet = 0;
 		int numPlayers = 4;
 		int smallBlind = 100;
 		int dealerButton = 1;
@@ -34,7 +36,7 @@ public class Main {
 		
 		for(i=0; i < players.size(); ++i)
 		System.out.println("Player " + i + " has " + players.get(i).getCard(0) + " " + players.get(i).getCard(1));
-
+		turn = dealerButton + 1;
 
 		System.out.println("\n"+"\n");
 		sleep();
@@ -47,9 +49,13 @@ public class Main {
 		{
 		System.out.print("Choose and press Enter -- B:Bet C:Check R:Raise F:Fold -- ");
 		choice = in.nextLine();
-		if(choice == "B" || choice == "b")
+		
+		if(choice.equals("B") || choice.equals("b"))
 		{
-		    
+		    System.out.print("\nEnter bet amount: ");
+		    bet = Integer.parseInt(in.nextLine());
+		    players.get(turn).bet(table, bet);
+		    System.out.println("Pot: " + table.getPot());
 		}
 		
 		break;

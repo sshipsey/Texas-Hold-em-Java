@@ -62,5 +62,10 @@ public class Player {
     {
         m_bank+=pot;
     }
+    public void bet(Table t, int b)
+    {
+        m_bank -= b;
+        t.addToPot(b);
+    }
 }
 
