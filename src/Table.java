@@ -7,6 +7,7 @@ public class Table {
 	private ArrayList<Card> tableCards = new ArrayList<Card>();
 	private int smallBlind;
 	private int blindPosition;
+	private int pot;
 	
 	public Table(ArrayList<Player> p , int sB, int bP)
 	{
@@ -49,5 +50,18 @@ public class Table {
 		for(Card card:tableCards)
 			retVal += card.toString();
 		return retVal;
+	}
+	public int getPot()
+	{
+	    return pot;
+	}
+	public void addToPot(int a)
+	{
+	    pot+=a;
+	}
+	public void resetPot()
+	{
+	    pot = 0;
+	    
 	}
 }
