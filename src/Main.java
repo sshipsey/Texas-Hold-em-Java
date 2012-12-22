@@ -9,6 +9,7 @@ public class Main {
 		int i;
 		int turn;
 		int bet = 0;
+		int raise = 0;
 		int numPlayers = 4;
 		int smallBlind = 100;
 		int dealerButton = 1;
@@ -56,6 +57,18 @@ public class Main {
 		    bet = Integer.parseInt(in.nextLine());
 		    players.get(turn).bet(table, bet);
 		    System.out.println("Pot: " + table.getPot());
+		    break;
+		}
+		else if(choice.equals("C") || choice.equals("c"))
+		{
+		    players.get(turn).check();
+		    break;
+		}
+		else if(choice.equals("R") || choice.equals("r"))
+		{
+		    System.out.print("\nEnter raise amount: ");
+		    raise = Integer.parseInt(in.nextLine());
+		    players.get(turn).raise(table, raise);
 		}
 		
 		break;

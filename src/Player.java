@@ -67,5 +67,14 @@ public class Player {
         m_bank -= b;
         t.addToPot(b);
     }
+    public String check()
+    {
+        return "Player checks";
+    }
+    public void raise(Table t, int r)
+    {
+        m_bank -= r;
+        t.addToPot(r);
+    }
 }
 
