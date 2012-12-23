@@ -23,10 +23,10 @@ public class Main {
 	
 		ArrayList<Card> tableCards = new ArrayList<Card>();
 		
-		Table table = new Table(players,smallBlind,dealerButton);
-		Deck deck = new Deck();
-        deck.shuffle();
-        
+	    Deck deck = new Deck();
+		
+		Game game = new Game(players, deck, smallBlind, dealerButton);
+        game.start();
         
         //deal
         for (i=0;i < 2*players.size();i++)
@@ -55,8 +55,8 @@ public class Main {
 		{
 		    System.out.print("\nEnter bet amount: ");
 		    bet = Integer.parseInt(in.nextLine());
-		    players.get(turn).bet(table, bet);
-		    System.out.println("Pot: " + table.getPot());
+		    players.get(turn).bet(game, bet);
+		    System.out.println("Pot: " + game.getPot());
 		    break;
 		}
 		else if(choice.equals("C") || choice.equals("c"))
@@ -68,7 +68,7 @@ public class Main {
 		{
 		    System.out.print("\nEnter raise amount: ");
 		    raise = Integer.parseInt(in.nextLine());
-		    players.get(turn).raise(table, raise);
+		    players.get(turn).raise(game, raise);
 		}
 		
 		break;
@@ -84,7 +84,7 @@ public class Main {
 		sleep();
 		sleep();
 		
-		tableCards = table.flop(deck);
+		tableCards = game.flop();
 		
 		System.out.println(tableCards.toString());
 		
@@ -95,7 +95,7 @@ public class Main {
 		sleep();
 		
 		//TURN*********************************************************************
-		tableCards.add(table.turn(deck));
+		tableCards.add(game.turn());
 		
 		System.out.println("The Turn");
 		sleep();
@@ -107,7 +107,7 @@ public class Main {
 		sleep();	
 		
 		//RIVER*********************************************************************
-		tableCards.add(table.river(deck));
+		tableCards.add(game.river());
 		
 		System.out.println("The River");
 		sleep();

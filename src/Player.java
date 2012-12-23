@@ -62,19 +62,19 @@ public class Player {
     {
         m_bank+=pot;
     }
-    public void bet(Table t, int b)
+    public void bet(Game g, int b)
     {
         m_bank -= b;
-        t.addToPot(b);
+        g.addToPot(b);
     }
     public String check()
     {
         return "Player checks";
     }
-    public void raise(Table t, int r)
+    public void raise(Game g, int r)
     {
         m_bank -= r;
-        t.addToPot(r);
+        g.addToPot(r);
     }
 }
 
