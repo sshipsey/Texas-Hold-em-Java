@@ -21,34 +21,34 @@ public class Card {
 
         switch(m_value) {
             case 11:
-                retVal = "J";
+                retVal = "[J";
                 break;
             case 12:
-                retVal = "Q";
+                retVal = "[Q";
                 break;
             case 13:
-                retVal = "K";
+                retVal = "[K";
                 break;
             case 14:
-                retVal = "A";
+                retVal = "[A";
                 break;
             default:
-                retVal = "" + m_value;
+                retVal = "[" + m_value;
                 break;
         }
 
         switch(m_suit) {
             case DIAMONDS:
-                retVal += "\u2666";
+                retVal += "\u2666]";
                 break;
             case HEARTS:
-                retVal += "\u2665";
+                retVal += "\u2665]";
                 break;
             case CLUBS:
-                retVal += "\u2663";
+                retVal += "\u2663]";
                 break;
             case SPADES:
-                retVal += "\u2660";
+                retVal += "\u2660]";
                 break;
         }
 

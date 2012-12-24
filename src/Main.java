@@ -20,7 +20,7 @@ public class Main {
 		
 		for(i=0;i<numPlayers;i++)
 			players.add(new Player(null));
-	
+		
 		ArrayList<Card> tableCards = new ArrayList<Card>();
 		
 	    Deck deck = new Deck();
@@ -86,7 +86,7 @@ public class Main {
 		
 		tableCards = game.flop();
 		
-		System.out.println(tableCards.toString());
+		System.out.println(tableCards);
 		
 		sleep();
 		sleep();
