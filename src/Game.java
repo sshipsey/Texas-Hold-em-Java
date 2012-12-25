@@ -14,8 +14,8 @@ public class Game {
     private int bet = 0;
     private int raise = 0;
     private Scanner in = new Scanner(System.in);
-    private int numCalls = 0;
-    private int numChecks = 0;
+    private int numCalls = 0; // number of consecutive calls
+    private int numChecks = 0; //number of consecutive checks
     private int numPlayers;
     public Game(ArrayList<Player> p ,Deck d, int sB, int bP)
     {
@@ -108,11 +108,11 @@ public class Game {
         System.out.println("\n" + "Round of betting.." + "\n");
         
         while (true)
-        {
-            if(playerTurn > numPlayers-1)
-                playerTurn = playerTurn % numPlayers;
+        {   //modified version of betRound() for pre-flop scenario
+            
+            playerTurn = playerTurn % numPlayers;
         	askChoice();
-        	if (numCalls == numPlayers-1 || numChecks == numPlayers)
+        	if (numCalls == numPlayers || numChecks == numPlayers) //only this way pre-flop so big blind has a chance to raise
         		break;
         }
         
@@ -141,6 +141,8 @@ public class Game {
         System.out.println("\n" + "Round of betting.." + "\n");
         sleep();
         
+        betRound();
+        
         //TURN*********************************************************************
         tableCards.add(turn());
         
@@ -151,6 +153,7 @@ public class Game {
         sleep();
         System.out.println("\n" + "Round of betting.." + "\n");
         sleep();    
+        betRound();
         
         //RIVER*********************************************************************
         tableCards.add(river());
@@ -162,6 +165,7 @@ public class Game {
         sleep();
         System.out.println("\n" + "Round of betting.." + "\n");
         sleep();
+        betRound();
         System.out.println("Results:" + "\n" + "blah blah blah");
     }          
 
@@ -181,12 +185,19 @@ public class Game {
         
         while (true) //I wrote a lot of this at 6:30AM. I hope it makes sense.
         {
+        		if (players.get(playerTurn).getFold() == true)
+        		{
+        			playerTurn++;
+        			break;  //skip if player is folded
+        		}
         		System.out.println(players.get(playerTurn).getName() + "'s turn (Bank:" + players.get(playerTurn).getBank() + ")\nCurrent bet is " + bet);
                 System.out.print("Choose and press Enter\n----------------------\n");
                 if(bet == 0)
-                	System.out.println("C:Check\nB:Bet\nF:Fold");
+                	System.out.println("C:Check\nB:Bet\nF:Fold"); //no bets
+                else if(bet != 0 && bet != players.get(playerTurn).getBet())
+                	System.out.println("C:Call\nR:Raise\nF:Fold"); //someone has bet
                 else
-                	System.out.println("C:Call\nR:Raise\nF:Fold");
+                	System.out.println("C:Check\nR:Raise\nF:Fold"); //should only be reached on big blind with no raise pre-flop
     
                 String choice = in.nextLine();
                 //if B and there is no current bet, BET
@@ -198,6 +209,7 @@ public class Game {
            		   System.out.println(players.get(playerTurn).getName() + " Bets " + bet + "\n");
                    System.out.println("Pot: " + getPot());
                    numChecks = 0;
+                   playerTurn++;
                    break;
                 }
                 
@@ -248,7 +260,13 @@ public class Game {
                 {
                     players.get(playerTurn).fold();
                     playerTurn++;
+                    numPlayers--;
                     break;
+                }
+                else
+                {
+                	System.out.println("Invalid Entry");
+                	askChoice();
                 }
 
         }
@@ -262,5 +280,21 @@ public class Game {
             retVal += s + " ";
         }
         System.out.println(retVal);
+    }
+    void betRound()
+    {
+    	bet = 0;
+    	numCalls = 0;
+    	numChecks = 0;
+    	raise = 0;
+    	playerTurn = dealerButton + 1;
+        while (true)
+        {
+            
+            playerTurn = playerTurn % numPlayers;
+        	askChoice();
+        	if (numCalls == numPlayers - 1 || numChecks == numPlayers) //only this way pre-flop so big blind has a chance to raise
+        		break;
+        }
     }
 }
