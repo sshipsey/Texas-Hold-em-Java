@@ -13,8 +13,10 @@ public class Game {
     private int playerTurn;
     private int bet = 0;
     private int raise = 0;
-    private Scanner in = new Scanner(System.in);   
-    
+    private Scanner in = new Scanner(System.in);
+    private int numCalls = 0;
+    private int numChecks = 0;
+    private int numPlayers;
     public Game(ArrayList<Player> p ,Deck d, int sB, int bP)
     {
         
@@ -22,6 +24,7 @@ public class Game {
         smallBlind = sB;
         deck = d;
         dealerButton = bP;
+        numPlayers = players.size();
         
     }
     
@@ -67,12 +70,19 @@ public class Game {
         pot = 0;
         
     }
+    public void anteUp(int t)
+    {
+    	players.get((t+1) % numPlayers).bet(smallBlind);
+    	addToPot(smallBlind);
+    	players.get((t+2) % numPlayers).bet(smallBlind*2);
+    	addToPot(smallBlind*2);
+    	bet = smallBlind*2;
+    }
     public void start()
     {
 
         Scanner in = new Scanner(System.in); 
         String choice = null;
-        int numPlayers = players.size();
 
 
         
@@ -82,18 +92,29 @@ public class Game {
             players.get((playerTurn + 1 + i) % numPlayers).deal(deck.getNext());
             
 
-        System.out.println("Hands:" + "\n" + "-----------");
+        System.out.println("\nHands:" + "\n" + "-----------");
         
         for(i=0; i < players.size(); ++i)
-        System.out.println("Player " + i + " has " + players.get(i).getCard(0) + " " + players.get(i).getCard(1));
-        playerTurn = playerTurn + 1;
-        
-        if(playerTurn > numPlayers)
-            playerTurn = 1;
+        System.out.println(players.get(i).getName() + " has " + players.get(i).getCard(0) + " " + players.get(i).getCard(1));
 
-        System.out.println("\n"+"\n");
+        
+        System.out.println("\n" + players.get(dealerButton).getName() + " Deals");
+        	
+        
+        anteUp(dealerButton);
+        playerTurn = dealerButton + 3;
+        System.out.println("\n\n\nPot: " + pot);
         sleep();
         System.out.println("\n" + "Round of betting.." + "\n");
+        
+        while (true)
+        {
+            if(playerTurn > numPlayers-1)
+                playerTurn = playerTurn % numPlayers;
+        	askChoice();
+        	if (numCalls == numPlayers-1 || numChecks == numPlayers)
+        		break;
+        }
         
 
         
@@ -157,41 +178,82 @@ public class Game {
     
     void askChoice()
     {   
-        String choice = in.nextLine();
-        while (true)
+        
+        while (true) //I wrote a lot of this at 6:30AM. I hope it makes sense.
         {
-                System.out.print("Choose and press Enter -- B:Bet C:Check R:Raise F:Fold -- ");
+        		System.out.println(players.get(playerTurn).getName() + "'s turn (Bank:" + players.get(playerTurn).getBank() + ")\nCurrent bet is " + bet);
+                System.out.print("Choose and press Enter\n----------------------\n");
+                if(bet == 0)
+                	System.out.println("C:Check\nB:Bet\nF:Fold");
+                else
+                	System.out.println("C:Call\nR:Raise\nF:Fold");
     
-                if(choice.equals("B") || choice.equals("b"))
+                String choice = in.nextLine();
+                //if B and there is no current bet, BET
+                if(bet == 0 && (choice.equals("B") || choice.equals("b")))
                 {
                    System.out.print("\nEnter bet amount: ");
                    bet = Integer.parseInt(in.nextLine());
-                   players.get(playerTurn).bet(bet);
-                   addToPot(bet);
-                   System.out.println("Pot: " + getPot());                    
+           		   addToPot(players.get(playerTurn).bet(bet));
+           		   System.out.println(players.get(playerTurn).getName() + " Bets " + bet + "\n");
+                   System.out.println("Pot: " + getPot());
+                   numChecks = 0;
                    break;
                 }
+                
+                //if C, check for bet. if no bet, CHECK. if bet, CALL
                 else if(choice.equals("C") || choice.equals("c"))
                 {
-                    players.get(playerTurn).check();
-                    break;
+                	if(bet == 0)
+                	{
+                		// do nothing, AKA check
+                		System.out.println(players.get(playerTurn).getName() + " Checks" + "\n");
+                		numChecks++;
+                		playerTurn++;
+                	}
+                	else
+                	{
+                		//call
+                		addToPot(players.get(playerTurn).call(bet));
+                		System.out.println(players.get(playerTurn).getName() + " Calls (" + bet + ")");
+                        System.out.println("Pot: " + getPot() + "\n");
+                        numCalls++;
+                        playerTurn++;
+                	}
+                		break;
                 }
-                else if(choice.equals("R") || choice.equals("r"))
+                //if R, RAISE, but make sure raise > bet before applying
+                else if(bet > 0 && (choice.equals("R") || choice.equals("r")))
                 {
                     System.out.print("\nEnter raise amount: ");
                     raise = Integer.parseInt(in.nextLine());
-                    players.get(playerTurn).raise(raise);
-                    addToPot(raise);
-                    break;
+                    if (raise > bet)
+                    {
+                    	players.get(playerTurn).raise(raise);
+                    	addToPot(raise);
+                       	bet=raise;
+                    	System.out.println(players.get(playerTurn).getName() + " Raises to " + bet);
+                        System.out.println("Pot: " + getPot() + "\n");
+                    	numCalls=0;
+                    	playerTurn++;
+                    }
+                    else
+                    {
+                    	System.out.println("Raise must be greater than current bet (" + bet + ")");
+                    	askChoice();
+                    }
+                    	break;
                 }
                 else if(choice.equals("F") || choice.equals("f"))
                 {
                     players.get(playerTurn).fold();
+                    playerTurn++;
                     break;
                 }
 
         }
     }
+    
     void displayCards(ArrayList<Card> c)
     {
         String retVal="";
