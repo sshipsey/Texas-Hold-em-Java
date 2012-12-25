@@ -2,11 +2,19 @@ import java.util.ArrayList;
 
 public class Player {
 
-    enum choice{
-        B,
-        C,
-        R,
-        F
+
+    enum hand
+    {
+        HIGH_CARD,
+        PAIR,
+        TWO_PAIR,
+        THREE_OF_A_KIND,
+        STRAIGHT,
+        FLUSH,
+        FULL_HOUSE,
+        STRAIGHT_FLUSH,
+        ROYAL_FLUSH
+        
     }
     private String m_name;
     private int m_bank;
@@ -62,19 +70,31 @@ public class Player {
     {
         m_bank+=pot;
     }
-    public void bet(Game g, int b)
+    public void bet(int b)
     {
         m_bank -= b;
-        g.addToPot(b);
     }
     public String check()
     {
-        return "Player checks";
+        return "\nPlayer checks";
     }
-    public void raise(Game g, int r)
+    public void raise(int r)
     {
         m_bank -= r;
-        g.addToPot(r);
+    }
+    public String getFullHand(ArrayList<Card> tableCards)
+    {
+        String retVal = "";
+        
+        ArrayList<Card> fullHand = new ArrayList<Card>();
+        fullHand.add(m_hand.get(0));
+        fullHand.add(m_hand.get(1));
+        for(int i = 0; i<3; ++i)
+            fullHand.add(tableCards.get(i));
+            
+
+        
+        return retVal;
     }
 }
 
