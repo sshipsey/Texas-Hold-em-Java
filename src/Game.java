@@ -17,6 +17,7 @@ public class Game {
     private int numCalls = 0; // number of consecutive calls
     private int numChecks = 0; //number of consecutive checks
     private int numPlayers;
+    
     public Game(ArrayList<Player> p ,Deck d, int sB, int bP)
     {
         
@@ -246,7 +247,7 @@ public class Game {
                        	bet=raise;
                     	System.out.println(players.get(playerTurn).getName() + " Raises to " + bet);
                         System.out.println("Pot: " + getPot() + "\n");
-                    	numCalls=0;
+                    	numCalls=1;
                     	playerTurn++;
                     }
                     else
