@@ -2,33 +2,18 @@ import java.util.ArrayList;
 
 public class Player {
 
-
-    enum hand
-    {
-        HIGH_CARD,
-        PAIR,
-        TWO_PAIR,
-        THREE_OF_A_KIND,
-        STRAIGHT,
-        FLUSH,
-        FULL_HOUSE,
-        STRAIGHT_FLUSH,
-        ROYAL_FLUSH
-        
-    }
     private String m_name;
     private int m_bank;
     private ArrayList<Card> m_hand;
     private boolean folded;
     private int m_bet;
-    public Player(String name) {
+
+    public Player(String name, int startBank) {
         m_name = name;
-        m_bank = 1000;
+        m_bank = startBank;
         m_hand = new ArrayList<Card>();
     }
 
-
-    
     public String getName()
     {
     	return m_name;
@@ -52,71 +37,41 @@ public class Player {
     public ArrayList<Card> getHand() {
         return m_hand;
     }
-    
-    public Card getCard(int i)
-    {
+
+    public Card getCard(int i) {
     	return m_hand.get(i);
     }
-    public void fold()
-    {
+
+    public void fold() {
         folded = true;
     }
-    public boolean getFold()
-    {
+
+    public boolean isFolded() {
         return folded;
     }
-    public void newHand()
-    {
+
+    public void newHand() {
         folded = false;
     }
-    public void win(int pot)
-    {
-        m_bank+=pot;
-    }
-    public int bet(int b)
-    {
-        m_bank -= b; //take from player bank amount of 
+
+    public void bet(int b) {
+        removeBank(b);
         m_bet = b;
-        return m_bet;
     }
-    public int call(int c)
-    {        
-    	m_bank -= c - m_bet; //take from player bank amount of the current 
-    	int temp = m_bet;	 //bet minus what they already had on the table
-    	m_bet = c;
-    	return c - temp;
-    }
-    public void raise(int r)
-    {
+
+    public void raise(int r) {
         m_bank -= r;
     }
-    public int getBet()
-    {
-    	return m_bet;
+
+    public int call(int c) {
+        int call = c - m_bet;
+        removeBank(call);
+    	m_bet = c;
+    	return call;
     }
-    public String getBestHand(ArrayList<Card> tableCards)
-    {
-    	ArrayList<Integer> straight = new ArrayList<Integer>();
-    	
-        String retVal = "";
-        
-        ArrayList<Card> fullHand = new ArrayList<Card>();
-        fullHand.add(m_hand.get(0));
-        fullHand.add(m_hand.get(1));
-        for(int i = 0; i<3; ++i)
-            fullHand.add(tableCards.get(i));
-        
-        //check for royal flush
-        //check for straight flush
-        //check for check for full house
-        //check for flush
-        //check for straight
-        //check for three of a kind
-        //check for two pair
-        //check for pair
-        //check high card
-        
-        return retVal;
+
+    public int getBet() {
+    	return m_bet;
     }
 }
 

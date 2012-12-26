@@ -29,7 +29,7 @@ public class Deck {
 
 	private void makeDeck() {
         for (Card.Suit suit : Card.Suit.values())
-            for (int i = 1; i <= 14; ++i)
+            for (int i = 2; i <= 14; ++i)
                 m_cards.add(new Card(i, suit));
 	}
 }

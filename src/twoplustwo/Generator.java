@@ -1,39 +1,40 @@
 package twoplustwo;
 
+import java.lang.Exception;
 import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
 
 public class Generator {
 
-	/* Card to integer conversions:
+    /* Card to integer conversions:
 
-	2c =  1    2d = 14    2h = 27    2s = 40
-	3c =  2    3d = 15    3h = 28    3s = 41
-	4c =  3    4d = 16    4h = 29    4s = 42
-	5c =  4    5d = 17    5h = 30    5s = 43
-	6c =  5    6d = 18    6h = 31    6s = 44
-	7c =  6    7d = 19    7h = 32    7s = 45
-	8c =  7    8d = 20    8h = 33    8s = 46
-	9c =  8    9d = 21    9h = 34    9s = 47
-	Tc =  9    Td = 22    Th = 35    Ts = 48
-	Jc = 10    Jd = 23    Jh = 36    Js = 49
-	Qc = 11    Qd = 24    Qh = 37    Qs = 50
-	Kc = 12    Kd = 25    Kh = 38    Ks = 51
-	Ac = 13    Ad = 26    Ah = 39    As = 52
+    2c =  1    2d = 14    2h = 27    2s = 40
+    3c =  2    3d = 15    3h = 28    3s = 41
+    4c =  3    4d = 16    4h = 29    4s = 42
+    5c =  4    5d = 17    5h = 30    5s = 43
+    6c =  5    6d = 18    6h = 31    6s = 44
+    7c =  6    7d = 19    7h = 32    7s = 45
+    8c =  7    8d = 20    8h = 33    8s = 46
+    9c =  8    9d = 21    9h = 34    9s = 47
+    Tc =  9    Td = 22    Th = 35    Ts = 48
+    Jc = 10    Jd = 23    Jh = 36    Js = 49
+    Qc = 11    Qd = 24    Qh = 37    Qs = 50
+    Kc = 12    Kd = 25    Kh = 38    Ks = 51
+    Ac = 13    Ad = 26    Ah = 39    As = 52
 
-	  2c =  1    2d =  2    2h =  3    2s =  4
-   3c =  5    3d =  6    3h =  7    3s =  8
-   4c =  9    4d = 10    4h = 11    4s = 12
-   5c = 13    5d = 14    5h = 15    5s = 16
-   6c = 17    6d = 18    6h = 19    6s = 20
-   7c = 21    7d = 22    7h = 23    7s = 24
-   8c = 25    8d = 26    8h = 27    8s = 28
-   9c = 29    9d = 30    9h = 31    9s = 32
-   Tc = 33    Td = 34    Th = 35    Ts = 36
-   Jc = 37    Jd = 38    Jh = 39    Js = 40
-   Qc = 41    Qd = 42    Qh = 43    Qs = 44
-   Kc = 45    Kd = 46    Kh = 47    Ks = 48
-   Ac = 49    Ad = 50    Ah = 51    As = 52
+    2c =  1    2d =  2    2h =  3    2s =  4
+    3c =  5    3d =  6    3h =  7    3s =  8
+    4c =  9    4d = 10    4h = 11    4s = 12
+    5c = 13    5d = 14    5h = 15    5s = 16
+    6c = 17    6d = 18    6h = 19    6s = 20
+    7c = 21    7d = 22    7h = 23    7s = 24
+    8c = 25    8d = 26    8h = 27    8s = 28
+    9c = 29    9d = 30    9h = 31    9s = 32
+    Tc = 33    Td = 34    Th = 35    Ts = 36
+    Jc = 37    Jd = 38    Jh = 39    Js = 40
+    Qc = 41    Qd = 42    Qh = 43    Qs = 44
+    Kc = 45    Kd = 46    Kh = 47    Ks = 48
+    Ac = 49    Ad = 50    Ah = 51    As = 52
 
 	*/
 
@@ -75,7 +76,6 @@ public class Generator {
 
 	private static long   startTimer;
 	private static long   stopTimer;
-
 
 	// Inserts a key into the key array and returns the insertion index.
 	public static int insertKey(long key) {
@@ -122,8 +122,6 @@ public class Generator {
 		return high;
 
 	} // END insertKey method
-
-
 
 	// Returns a key for the hand created by adding a new card to the hand
 	// represented by the given key.  Returns 0 if new card already appears in hand.
@@ -185,8 +183,6 @@ public class Generator {
 
 	} // END makeKey method
 
-
-
 	// Formats and returns a card in 8-bit packed representation.
 	private static int formatCard8bit(int card) {
 
@@ -201,8 +197,6 @@ public class Generator {
 		return (((card >>> 2) + 1) << 4) + (card & 3) + 1;
 
 	} // END formatCard8bit method
-
-
 
 	// Sorts the hand using Bose-Nelson Sorting Algorithm (N = 7).
 	private static void sortHand() {
@@ -224,8 +218,6 @@ public class Generator {
 		swapCard(5, 6);
 	} // End sortHand method
 
-
-
 	// Swaps card i with card j.
 	private static void swapCard(int i, int j) {
 		if (hand[i] < hand[j]) {
@@ -234,8 +226,6 @@ public class Generator {
 			hand[i] ^= hand[j];
 		}
 	} // END swapCard method
-
-
 
 	// Determines the relative strength of a hand (the hand is given by its unique key value).
 	private static int getHandRank(long key) {
@@ -368,8 +358,6 @@ public class Generator {
 
 	} // END getHandRank method
 
-
-
 	private static int getIndex(int key) {
 
 		// use binary search to find key
@@ -393,8 +381,6 @@ public class Generator {
 
 	} // END getIndex method
 
-
-
 	private static int eval_5hand(int c1, int c2, int c3, int c4, int c5) {
 		int   q = (c1 | c2 | c3 | c4 | c5) >> 16;
 		short s;
@@ -411,8 +397,6 @@ public class Generator {
 		return Values.table[q];
 
 	} // END eval_5hand method
-
-
 
 	public static void generateTables() {
 
@@ -472,58 +456,14 @@ public class Generator {
 
 	} // END generateTables method
 
-
-
-	public static void main (String [] args) throws Exception {
-		generateTables();
-
-		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("handranks.dat"));
-		oos.writeObject(handRanks);
+    public static void saveTables(String file) {
+        try {
+            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file));
+            oos.writeObject(handRanks);
+        }
+        catch (Exception e)
+        {
+            // Eat exception (should we do more here?)
+        }
 	}
-
 }
-
-/*
-
-Generating and sorting keys...done.
-
-          Number of Keys Generated: 612978
-                     Time Required: 67.637000 seconds
-
-Generating hand ranks...done.
-
-                     Time Required: 283.387000 seconds
-
-Enumerating hand frequencies and equivalency classes...done.
-
-                     Time Required: 6.509000 seconds
-
-SEVEN-CARD POKER HAND FREQUENCIES AND EQUIVALENCY CLASSES
-
-    HAND                    FREQUENCY         CLASSES
-    -------------------------------------------------
-    Straight Flush              41584              10
-    Four of a Kind             224848             156
-    Full House                3473184             156
-    Flush                     4047644            1277
-    Straight                  6180020              10
-    Three of a Kind           6461620             575
-    Two Pair                 31433400             763
-    One Pair                 58627800            1470
-    High Card                23294460             407
-    Invalid Hand                    0               0
-    -------------------------------------------------
-    TOTAL                   133784560            4824
-
-     BAD!! = 0
-High Card = 23294460
-Pair = 58627800
-Two Pair = 31433400
-Three of a Kind = 6461620
-Straight = 6180020
-Flush = 4047644
-Full House = 3473184
-Four of a Kind = 224848
-Straight Flush = 41584
-Total Hands = 133784560
-    */
