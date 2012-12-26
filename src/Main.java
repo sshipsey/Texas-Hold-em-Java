@@ -20,7 +20,8 @@ public class Main {
         System.out.println("Generate hand 1");
         for(int i = 0; i < 7; ++i) {
             Card card = deck.getNext();
-            System.out.print(card + " ");
+            int cardNum = ((4 * card.getValue()) - 7) + card.getSuit().ordinal();
+            System.out.print(card + ":" + cardNum + " ");
             hand1.add(card);
         }
         System.out.println();
@@ -30,7 +31,8 @@ public class Main {
         System.out.println("Generate hand 2");
         for(int i = 0; i < 7; ++i) {
             Card card = deck.getNext();
-            System.out.print(card + " ");
+            int cardNum = ((4 * card.getValue()) - 7) + card.getSuit().ordinal();
+            System.out.print(card + ":" + cardNum + " ");
             hand2.add(card);
         }
         System.out.println();

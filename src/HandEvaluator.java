@@ -30,12 +30,13 @@ public class HandEvaluator {
 
         int rank = 53;
         for(Card card : hand) {
-            int cardNum = (card.getValue() - 1) + (card.getSuit().ordinal() * 13);
+            int cardNum = ((4 * card.getValue()) - 7) + card.getSuit().ordinal();
             rank = handRanks[rank + cardNum];
         }
 
         System.out.println(rank);
         System.out.println(rank >> 12);
+        System.out.println(rank & 0x00000FFF);
     }
 
     private static void loadLookupTable() {
