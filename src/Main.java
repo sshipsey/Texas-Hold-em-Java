@@ -10,7 +10,7 @@ public class Main {
 	@SuppressWarnings("unused")
 	public static void main(String args[]) {
         // Temporary Evaluator testing ground
-
+		/*
         ArrayList<Card> hand1 = new ArrayList<Card>();
         ArrayList<Card> hand2 = new ArrayList<Card>();
 
@@ -39,11 +39,11 @@ public class Main {
 
         HandEvaluator.eval(hand2);
 
-        /*
+        
 	    //  Initialize Game with
 	    //  number of players, starting small blind,
 	    //  dealer button position, and a shuffled deck
-
+		*/
         int numPlayers;
         int startBank = 1000;
         int smallBlind = 100;
@@ -79,6 +79,6 @@ public class Main {
 
 		Game game = new Game(players, smallBlind, dealerButton);
         game.start();
-        */
+        
 	}
 }

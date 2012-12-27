@@ -22,7 +22,7 @@ public class HandEvaluator {
     private static final String LUT_FILE = "handranks.dat";
     private static int[] handRanks;
 
-    public static void eval(ArrayList<Card> hand) {
+    public static int eval(ArrayList<Card> hand) {
         if (hand.size() > 7 || hand.size() < 5)
             throw new IllegalArgumentException("Hand size must be between 5 and 7");
 
@@ -33,10 +33,12 @@ public class HandEvaluator {
             int cardNum = ((4 * card.getValue()) - 7) + card.getSuit().ordinal();
             rank = handRanks[rank + cardNum];
         }
-
+        /*
         System.out.println(rank);
         System.out.println(rank >> 12);
         System.out.println(rank & 0x00000FFF);
+    	*/
+        return rank;
     }
 
     private static void loadLookupTable() {

@@ -1,8 +1,23 @@
-import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.*;
+
+enum finalHand{
+
+	HIGH_CARD,
+	PAIR,
+	TWO_PAIR,
+	THREE_OF_A_KIND,
+	STRAIGHT,
+	FLUSH,
+	FULL_HOUSE,
+	FOUR_OF_A_KIND,
+	STRAIGHT_FLUSH,
+	ROYAL_FLUSH;
+}
 
 public class Game {
+	
 
+	
     private Deck deck = new Deck();
     private ArrayList<Player> players = new ArrayList<Player>();
     private ArrayList<Card> tableCards = new ArrayList<Card>();
@@ -14,8 +29,7 @@ public class Game {
     private int bet = 0;
     private int raise = 0;
     private Scanner in = new Scanner(System.in);
-    private int numCalls = 0; // number of consecutive calls
-    private int numChecks = 0; //number of consecutive checks
+
     private int numPlayers;
 
     public Game(ArrayList<Player> p, int sB, int bP) {
@@ -90,71 +104,107 @@ public class Game {
         anteUp(dealerButton);
         playerTurn = dealerButton + 3;
         System.out.println("\n\n\nPot: " + pot);
-        sleep();
+        //sleep();
         System.out.println("\n" + "Round of betting.." + "\n");
-
+        
+        boolean bettingOver;
+     /*
         while (true)
-        {   //modified version of betRound() for pre-flop scenario
+        { //modified version of betRound() for pre-flop scenario
 
-            playerTurn = playerTurn % numPlayers;
+        	playerTurn = playerTurn % numPlayers;
         	askChoice();
-        	if (numCalls == numPlayers || numChecks == numPlayers) //only this way pre-flop so big blind has a chance to raise
+        	bettingOver = true;
+        	for(Player p : players)
+        	{
+        		if (p.isFolded())
+        			continue;
+        		if (p.getBet() != bet)
+        			bettingOver = false;		
+        	}
+        	if (bettingOver == true)
         		break;
-        }
-
-
+        	}
+      */
 
 
 
 
         //deal
-        sleep();
+        //sleep();
         System.out.println("Here Comes the Flop!");
 
 
 
 
         //FLOP*********************************************************************
-        sleep();
+        //sleep();
 
         tableCards = flop();
 
         displayCards(tableCards);
 
-        sleep();
-        sleep();
+        //sleep();
+        //sleep();
 
         System.out.println("\n" + "Round of betting.." + "\n");
-        sleep();
+        //sleep();
 
-        betRound();
+      //  betRound();
 
         //TURN*********************************************************************
         tableCards.add(turn());
 
         System.out.println("The Turn");
-        sleep();
+        //sleep();
         displayCards(tableCards);
 
-        sleep();
+        //sleep();
         System.out.println("\n" + "Round of betting.." + "\n");
-        sleep();
-        betRound();
+        //sleep();
+      //  betRound();
 
         //RIVER*********************************************************************
         tableCards.add(river());
 
         System.out.println("The River");
-        sleep();
+        //sleep();
         displayCards(tableCards);
 
-        sleep();
+        //sleep();
         System.out.println("\n" + "Round of betting.." + "\n");
-        sleep();
-        betRound();
-        System.out.println("Results:" + "\n" + "blah blah blah");
+        //sleep();
+      //  betRound();
+        System.out.println("Results:\n-----------");
+        
+        
+        ArrayList<Integer> handRankings = new ArrayList<Integer>();
+    	
+        for(Player p : players) {
+        	ArrayList<Card> fullHand = new ArrayList<Card>();
+        	fullHand.addAll(p.getHand());
+        	fullHand.addAll(tableCards);
+        	System.out.print(p.getName()+ " has cards ");
+        	for(Card c:fullHand)
+        	{
+        		System.out.print(c.toString());
+        	}
+        	System.out.println("");
+        	handRankings.add(HandEvaluator.eval(fullHand));
+        	
+        	}
+        int winnerIndex = 0;
+        for(int i = 0; i < handRankings.size()-1;i++) {
+        	if(handRankings.get(i+1)>handRankings.get(winnerIndex))
+        		winnerIndex = i+1;
+        }
+        int handRank = (handRankings.get(winnerIndex) >> 12);
+        displayWinner(players.get(winnerIndex),handRank);
     }
-
+    
+    
+    
+    
     void sleep() {
         try {
             Thread.currentThread().sleep(1000);
@@ -190,7 +240,6 @@ public class Game {
                    addToPot(bet);
            		   System.out.println(players.get(playerTurn).getName() + " Bets " + bet + "\n");
                    System.out.println("Pot: " + getPot());
-                   numChecks = 0;
                    playerTurn++;
                    break;
                 }
@@ -202,7 +251,6 @@ public class Game {
                 	{
                 		// do nothing, AKA check
                 		System.out.println(players.get(playerTurn).getName() + " Checks" + "\n");
-                		numChecks++;
                 		playerTurn++;
                 	}
                 	else
@@ -211,7 +259,6 @@ public class Game {
                 		addToPot(players.get(playerTurn).call(bet));
                 		System.out.println(players.get(playerTurn).getName() + " Calls (" + bet + ")");
                         System.out.println("Pot: " + getPot() + "\n");
-                        numCalls++;
                         playerTurn++;
                 	}
                 		break;
@@ -228,7 +275,6 @@ public class Game {
                        	bet=raise;
                     	System.out.println(players.get(playerTurn).getName() + " Raises to " + bet);
                         System.out.println("Pot: " + getPot() + "\n");
-                    	numCalls=1;
                     	playerTurn++;
                     }
                     else
@@ -242,7 +288,6 @@ public class Game {
                 {
                     players.get(playerTurn).fold();
                     playerTurn++;
-                    numPlayers--;
                     break;
                 }
                 else
@@ -263,17 +308,29 @@ public class Game {
     }
 
     void betRound() {
-    	bet = 0;
-    	numCalls = 0;
-    	numChecks = 0;
-    	raise = 0;
-    	playerTurn = dealerButton + 1;
+    	boolean bettingOver;
         while (true)
-        {
-            playerTurn = playerTurn % numPlayers;
+        { //modified version of betRound() for pre-flop scenario
+
+        	playerTurn = playerTurn % numPlayers;
         	askChoice();
-        	if (numCalls == numPlayers - 1 || numChecks == numPlayers) //only this way pre-flop so big blind has a chance to raise
+        	bettingOver = true;
+        	for(Player p : players)
+        	{
+        		if (p.isFolded())
+        			continue;
+        		if (p.getBet() != bet)
+        			bettingOver = false;		
+        	}
+        	if (bettingOver == true)
         		break;
-        }
+        	}
+    }
+    
+    void displayWinner(Player p, int i)
+    {
+    	finalHand f = finalHand.values()[i-1];
+    	System.out.println("\n\n" + p.getName() + " has won the hand with a " + f.name());
+    	
     }
 }
