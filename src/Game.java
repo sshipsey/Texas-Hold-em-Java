@@ -1,7 +1,7 @@
 import java.util.*;
 
 enum finalHand{
-
+	BAD_HAND,
 	HIGH_CARD,
 	PAIR,
 	TWO_PAIR,
@@ -329,7 +329,7 @@ public class Game {
     
     void displayWinner(Player p, int i)
     {
-    	finalHand f = finalHand.values()[i-1];
+    	finalHand f = finalHand.values()[i];
     	System.out.println("\n\n" + p.getName() + " has won the hand with a " + f.name());
     	
     }
