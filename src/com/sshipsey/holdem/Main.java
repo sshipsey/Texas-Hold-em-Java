@@ -1,3 +1,5 @@
+package com.sshipsey.holdem;
+
 import java.util.*;
 import java.awt.*;
 import javax.swing.*;
@@ -9,41 +11,9 @@ public class Main {
 
 	@SuppressWarnings("unused")
 	public static void main(String args[]) {
-        // Temporary Evaluator testing ground
-		/*
-        ArrayList<Card> hand1 = new ArrayList<Card>();
-        ArrayList<Card> hand2 = new ArrayList<Card>();
-
-        Deck deck = new Deck();
-        deck.shuffle();
-
-        System.out.println("Generate hand 1");
-        for(int i = 0; i < 7; ++i) {
-            Card card = deck.getNext();
-            int cardNum = ((4 * card.getValue()) - 7) + card.getSuit().ordinal();
-            System.out.print(card + ":" + cardNum + " ");
-            hand1.add(card);
-        }
-        System.out.println();
-
-        HandEvaluator.eval(hand1);
-
-        System.out.println("Generate hand 2");
-        for(int i = 0; i < 7; ++i) {
-            Card card = deck.getNext();
-            int cardNum = ((4 * card.getValue()) - 7) + card.getSuit().ordinal();
-            System.out.print(card + ":" + cardNum + " ");
-            hand2.add(card);
-        }
-        System.out.println();
-
-        HandEvaluator.eval(hand2);
-
-        
 	    //  Initialize Game with
 	    //  number of players, starting small blind,
 	    //  dealer button position, and a shuffled deck
-		*/
         int numPlayers;
         int startBank = 1000;
         int smallBlind = 100;
@@ -79,6 +49,6 @@ public class Main {
 
 		Game game = new Game(players, smallBlind, dealerButton);
         game.start();
-        
+
 	}
 }

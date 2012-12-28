@@ -1,4 +1,4 @@
-package twoplustwo;
+package org.pokerai.twoplustwo;
 
 public class Products {
 	static int table[] = { 48, 72, 80, 108, 112, 120, 162, 168, 176, 180, 200,

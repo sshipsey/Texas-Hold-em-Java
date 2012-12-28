@@ -1,3 +1,5 @@
+package com.sshipsey.holdem;
+
 import java.awt.*;
 import javax.swing.*;
 import java.io.*;

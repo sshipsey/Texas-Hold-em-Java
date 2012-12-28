@@ -1,3 +1,5 @@
+package com.sshipsey.holdem;
+
 import java.util.ArrayList;
 import java.util.Collections;
 

@@ -1,4 +1,4 @@
-import java.util.*;
+package com.sshipsey.holdem;
 
 enum finalHand{
 	BAD_HAND,
@@ -15,9 +15,7 @@ enum finalHand{
 }
 
 public class Game {
-	
 
-	
     private Deck deck = new Deck();
     private ArrayList<Player> players = new ArrayList<Player>();
     private ArrayList<Card> tableCards = new ArrayList<Card>();
@@ -106,7 +104,7 @@ public class Game {
         System.out.println("\n\n\nPot: " + pot);
         //sleep();
         System.out.println("\n" + "Round of betting.." + "\n");
-        
+
         boolean bettingOver;
      /*
         while (true)
@@ -120,7 +118,7 @@ public class Game {
         		if (p.isFolded())
         			continue;
         		if (p.getBet() != bet)
-        			bettingOver = false;		
+        			bettingOver = false;
         	}
         	if (bettingOver == true)
         		break;
@@ -176,10 +174,10 @@ public class Game {
         //sleep();
       //  betRound();
         System.out.println("Results:\n-----------");
-        
-        
+
+
         ArrayList<Integer> handRankings = new ArrayList<Integer>();
-    	
+
         for(Player p : players) {
         	ArrayList<Card> fullHand = new ArrayList<Card>();
         	fullHand.addAll(p.getHand());
@@ -191,7 +189,7 @@ public class Game {
         	}
         	System.out.println("");
         	handRankings.add(HandEvaluator.eval(fullHand));
-        	
+
         	}
         int winnerIndex = 0;
         for(int i = 0; i < handRankings.size()-1;i++) {
@@ -201,10 +199,10 @@ public class Game {
         int handRank = (handRankings.get(winnerIndex) >> 12);
         displayWinner(players.get(winnerIndex),handRank);
     }
-    
-    
-    
-    
+
+
+
+
     void sleep() {
         try {
             Thread.currentThread().sleep(1000);
@@ -320,17 +318,17 @@ public class Game {
         		if (p.isFolded())
         			continue;
         		if (p.getBet() != bet)
-        			bettingOver = false;		
+        			bettingOver = false;
         	}
         	if (bettingOver == true)
         		break;
         	}
     }
-    
+
     void displayWinner(Player p, int i)
     {
     	finalHand f = finalHand.values()[i];
     	System.out.println("\n\n" + p.getName() + " has won the hand with a " + f.name());
-    	
+
     }
 }

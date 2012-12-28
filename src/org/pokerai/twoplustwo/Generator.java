@@ -1,4 +1,4 @@
-package twoplustwo;
+package org.pokerai.twoplustwo;
 
 import java.lang.Exception;
 import java.io.FileOutputStream;

@@ -1,5 +1,4 @@
-package twoplustwo;
-
+package org.pokerai.twoplustwo;
 
 public class Values {
 	static short table[] = {

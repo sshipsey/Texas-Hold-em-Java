@@ -1,4 +1,6 @@
-import twoplustwo.Generator;
+package com.sshipsey.holdem;
+
+import org.pokerai.twoplustwo.Generator;
 import java.util.ArrayList;
 import java.io.File;
 import java.io.FileInputStream;
@@ -7,17 +9,6 @@ import java.lang.Exception;
 import java.lang.IllegalArgumentException;
 
 public class HandEvaluator {
-
-    /*
-    public class HandData {
-        public enum HandClass {
-
-        }
-
-        public int handRank;
-        public HandClass handClass;
-    }
-    */
 
     private static final String LUT_FILE = "handranks.dat";
     private static int[] handRanks;
@@ -33,11 +24,7 @@ public class HandEvaluator {
             int cardNum = ((4 * card.getValue()) - 7) + card.getSuit().ordinal();
             rank = handRanks[rank + cardNum];
         }
-        /*
-        System.out.println(rank);
-        System.out.println(rank >> 12);
-        System.out.println(rank & 0x00000FFF);
-    	*/
+
         return rank;
     }
 

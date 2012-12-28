@@ -1,4 +1,4 @@
-package twoplustwo;
+package org.pokerai.twoplustwo;
 
 public class Unique {
 	static short table[] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,

@@ -1,3 +1,5 @@
+package com.sshipsey.holdem;
+
 public class Card {
 
     public enum Suit {
