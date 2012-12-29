@@ -1,5 +1,4 @@
 package com.sshipsey.holdem;
-
 import com.sshipsey.holdem.controllers.ApplicationController;
 import com.sshipsey.holdem.views.MainView;
 import com.sshipsey.holdem.views.ViewFactory;
