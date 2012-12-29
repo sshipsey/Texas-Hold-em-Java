@@ -59,8 +59,8 @@ public class Game extends Observable {
 		m_pot += num;
 	}
 	
-	public void resetPot(int p) {
-		m_pot = p;
+	public void setPot(int num) {
+		m_pot = num;
 	}
 
 	public int getBet() {
@@ -111,20 +111,13 @@ public class Game extends Observable {
 		m_dealerButton = index;
 	}
 	
-	public void resetAll(int p) {
-		resetPlayers();
-		resetTableCards();
-		resetPot(p);
-		resetBet();
-		resetTurn();
-	}
-	   public void resetAll() {
-	        resetPlayers();
-	        resetTableCards();
-	        resetPot(0);
-	        resetBet();
-	        resetTurn();
-	    }
+   public void resetAll() {
+        resetPlayers();
+        resetTableCards();
+        resetBet();
+        resetTurn();
+    }
+   
 	private void initDealerButton() {
 		Random rnd = new Random();
 		m_dealerButton = rnd.nextInt(m_players.size());

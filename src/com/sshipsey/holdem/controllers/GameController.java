@@ -41,10 +41,10 @@ public class GameController {
 		burnAndTurn(1);
 		bettingRound();
 		
-		int nextPot = assignWinner();
+		assignWinner();
 		
 		m_game.moveDealerButton();
-		m_game.resetAll(nextPot);
+		m_game.resetAll();
 	}
 
 	private void bettingRound() {
@@ -94,7 +94,7 @@ public class GameController {
 		return controller.getChoice(m_game);
 	}
 
-	private int assignWinner() {
+	private void assignWinner() {
 		int maxRank = 0;
 		ArrayList<Player> winners = new ArrayList<Player>();
 		for(Player p : m_game.getPlayers()) {
@@ -110,24 +110,11 @@ public class GameController {
 			}
 		}
 		
-		// TODO: Can't have half a chip so integer math works well but
-		// we can actually lose a chip doing this. Needs work.
-		// Shipsey - I left the remaining chips in the pot for the next hand.
-		// Maybe this is a feasible solution? There also may be a better way
-		// to do it than I did. I probably passed the "next pot" around more
-		// than I needed to.
-		int splitPot;
-		int nextPot;
-		if (m_game.getPot() % winners.size() == 0) {
-		    splitPot = m_game.getPot() / winners.size();
-		    nextPot = 0;
-		}
-		else {
-		    splitPot = m_game.getPot() / winners.size();
-		    nextPot = m_game.getPot() % winners.size();
-		}
+		// I changed this even more, should still work
+	    int splitPot = m_game.getPot() / winners.size();
+	    int nextPot = m_game.getPot() % winners.size();
 		for(Player p : winners) p.addBank(splitPot);
-		return nextPot;
+		m_game.setPot(nextPot);
 	}
 	
 	private int evaluateHand(ArrayList<Card> holeCards) {
