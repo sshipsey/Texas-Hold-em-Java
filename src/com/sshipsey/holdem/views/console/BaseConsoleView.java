@@ -1,4 +1,4 @@
-package com.sshipsey.holdem.views;
+package com.sshipsey.holdem.views.console;
 
 import java.util.Scanner;
 

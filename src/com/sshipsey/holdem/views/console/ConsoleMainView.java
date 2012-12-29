@@ -1,13 +1,8 @@
-package com.sshipsey.holdem.views;
+package com.sshipsey.holdem.views.console;
 
-import java.util.Observable;
+import com.sshipsey.holdem.views.MainView;
 
-public class ConsoleGameView extends BaseConsoleView implements GameView {
-
-	@Override
-	public void update(Observable obs, Object arg) {
-		// TODO Auto-generated method stub
-	}
+public class ConsoleMainView extends BaseConsoleView implements MainView {
 
 	@Override
 	public int getNumPlayers() {

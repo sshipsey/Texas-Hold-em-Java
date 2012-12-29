@@ -1,10 +1,11 @@
 package com.sshipsey.holdem.models;
 
 import java.util.ArrayList;
+import java.util.Observable;
 
 import com.sshipsey.holdem.Card;
 
-public class Player {
+public class Player extends Observable {
 
     private String m_name;
     private int m_bank;
