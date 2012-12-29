@@ -40,6 +40,7 @@ public class HandEvaluator {
             FileInputStream fis = new FileInputStream(f);
             ObjectInputStream ois = new ObjectInputStream(fis);
             handRanks = (int[])ois.readObject();
+            ois.close();
         }
         catch (Exception e)
         {

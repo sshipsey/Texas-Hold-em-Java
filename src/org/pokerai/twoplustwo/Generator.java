@@ -460,6 +460,7 @@ public class Generator {
         try {
             ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file));
             oos.writeObject(handRanks);
+            oos.close();
         }
         catch (Exception e)
         {

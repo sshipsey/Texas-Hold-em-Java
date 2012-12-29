@@ -1,25 +1,35 @@
-package com.sshipsey.holdem;
+package com.sshipsey.holdem.models;
 
 import java.util.ArrayList;
+
+import com.sshipsey.holdem.Card;
 
 public class Player {
 
     private String m_name;
     private int m_bank;
     private ArrayList<Card> m_hand;
-    private boolean folded;
+    private boolean m_folded;
     private int m_bet;
 
     public Player(String name, int startBank) {
         m_name = name;
         m_bank = startBank;
         m_hand = new ArrayList<Card>();
+        m_folded = false;
+        m_bet = 0;
     }
 
-    public String getName()
-    {
+    public String getName() {
     	return m_name;
     }
+    
+    public void reset() {
+    	m_folded = false;
+    	m_hand.clear();
+    	m_bet = 0;
+    }
+    
     public void addBank(int n) {
         m_bank += n;
     }
@@ -45,31 +55,16 @@ public class Player {
     }
 
     public void fold() {
-        folded = true;
+        m_folded = true;
     }
 
     public boolean isFolded() {
-        return folded;
-    }
-
-    public void newHand() {
-        folded = false;
+        return m_folded;
     }
 
     public void bet(int b) {
         removeBank(b);
-        m_bet = b;
-    }
-
-    public void raise(int r) {
-        m_bank -= r;
-    }
-
-    public int call(int c) {
-        int call = c - m_bet;
-        removeBank(call);
-    	m_bet = c;
-    	return call;
+        m_bet += b;
     }
 
     public int getBet() {

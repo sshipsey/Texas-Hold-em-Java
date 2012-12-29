@@ -6,7 +6,9 @@ import java.util.Collections;
 public class Deck {
 
     public class DeckEmptyException extends IndexOutOfBoundsException {
-        public DeckEmptyException() {
+		private static final long serialVersionUID = -7560185736063852000L;
+
+		public DeckEmptyException() {
             super("Deck is out of cards, reshuffle");
         }
     }

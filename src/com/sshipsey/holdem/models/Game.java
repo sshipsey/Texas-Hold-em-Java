@@ -1,4 +1,12 @@
-package com.sshipsey.holdem;
+package com.sshipsey.holdem.models;
+
+import java.util.ArrayList;
+import java.util.Scanner;
+
+import com.sshipsey.holdem.Card;
+import com.sshipsey.holdem.Deck;
+import com.sshipsey.holdem.HandEvaluator;
+import com.sshipsey.holdem.views.GameView;
 
 enum finalHand{
 	BAD_HAND,
@@ -30,10 +38,10 @@ public class Game {
 
     private int numPlayers;
 
-    public Game(ArrayList<Player> p, int sB, int bP) {
+    public Game(ArrayList<Player> p, int sB, GameView view) {
         players = p;
         smallBlind = sB;
-        dealerButton = bP;
+        dealerButton = 0;
         numPlayers = players.size();
         deck.shuffle();
     }
@@ -254,7 +262,8 @@ public class Game {
                 	else
                 	{
                 		//call
-                		addToPot(players.get(playerTurn).call(bet));
+                		players.get(playerTurn).bet(bet);
+                		addToPot(bet);
                 		System.out.println(players.get(playerTurn).getName() + " Calls (" + bet + ")");
                         System.out.println("Pot: " + getPot() + "\n");
                         playerTurn++;
@@ -268,7 +277,7 @@ public class Game {
                     raise = Integer.parseInt(in.nextLine());
                     if (raise > bet)
                     {
-                    	players.get(playerTurn).raise(raise);
+                    	players.get(playerTurn).bet(raise);
                     	addToPot(raise);
                        	bet=raise;
                     	System.out.println(players.get(playerTurn).getName() + " Raises to " + bet);
