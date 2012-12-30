@@ -11,15 +11,16 @@ import com.sshipsey.holdem.views.GameView;
 import com.sshipsey.holdem.views.PlayerView;
 import com.sshipsey.holdem.views.ViewFactory;
 
-public class GameController {
+public class GameController extends BaseController {
 	
 	private Game m_game;
-	private GameView m_view;
 	private Deck m_deck = new Deck();
+	private ArrayList<PlayerController> m_playerControllers = new ArrayList<PlayerController>();
 	
 	public GameController(Game game, GameView view) {
+		super(game, view);
 		m_game = game;
-		m_view = view;
+		createPlayerControllers();
 	}
 	
 	public void start() {
@@ -58,22 +59,16 @@ public class GameController {
 			}
 			
 			// Let player make a choice
-			char choice = getPlayerChoice(currentPlayer);
-			switch(choice) {
-			case 'b':	// Player bets/raises
-				m_game.setBet(currentPlayer.getBet());
-				// There is purposely no break here. (Read: Switch Statement Fall-Through)
-			case 'c':	// Player calls
-				m_game.addPot(m_game.getBet());
-				break;
-			case 'f':	// Player folds
-				currentPlayer.fold();
-				break;
-			}
+			makeCurrentPlayerChoice();
 			
 			// Move to next player			
 			m_game.nextTurn();
 			
+			// TODO: This malfunctions pre-flop. How to fix?
+			// TODO: This malfunctions post-flop if the player in first position checks
+			//        because after he checks, everyone's bet is 0 and the table
+			//        bet is 0.
+			// TODO: This whole logic is perhaps wrong. We need to do better.
 			// Determine if we can proceed
 			boolean bettingOver = true;
 			for(Player p : m_game.getPlayers()) {
@@ -86,12 +81,12 @@ public class GameController {
 			if(bettingOver) break;
 		}
 		m_game.resetBet();
+		m_game.resetTurn();
+		for(Player p : m_game.getPlayers()) p.resetBet();
 	}
 
-	private char getPlayerChoice(Player currentPlayer) {
-		PlayerView view = (PlayerView) ViewFactory.createView(ViewFactory.View.PLAYER, currentPlayer);
-		PlayerController controller = new PlayerController(currentPlayer, view);
-		return controller.getChoice(m_game);
+	private void makeCurrentPlayerChoice() {
+		m_playerControllers.get(m_game.getTurn()).makeChoice(m_game);
 	}
 
 	private void assignWinner() {
@@ -128,6 +123,7 @@ public class GameController {
 		m_deck.getNext(); // Burn
 		for(int i = 0; i < cards; ++i)
 			m_game.addTableCard(m_deck.getNext());
+		m_game.notifyObservers();
 	}
 	
 	private void anteUp() {
@@ -145,5 +141,14 @@ public class GameController {
 		int offset = m_game.getDealerButton() + 1;
 		for(int i = 0; i < 2 * numPlayers; ++i)
 			m_game.getPlayer((offset + i) % numPlayers).deal(m_deck.getNext());
+		for(Player p : m_game.getPlayers()) p.notifyObservers();
+	}
+	
+	private void createPlayerControllers() {
+		for(Player p : m_game.getPlayers()) {
+			PlayerView view = (PlayerView) ViewFactory.createView(ViewFactory.View.PLAYER);
+			PlayerController controller = new PlayerController(p, view);
+			m_playerControllers.add(controller);
+		}
 	}
 }

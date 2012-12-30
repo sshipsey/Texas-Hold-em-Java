@@ -41,6 +41,7 @@ public class Game extends Observable {
 	
 	public void addTableCard(Card card) {
 		m_tableCards.add(card);
+        setChanged();
 	}
 	
 	public ArrayList<Card> getTableCards() {
@@ -49,6 +50,7 @@ public class Game extends Observable {
 	
 	public void resetTableCards() {
 		m_tableCards.clear();
+        setChanged();
 	}
 
 	public int getPot() {
@@ -57,6 +59,7 @@ public class Game extends Observable {
 	
 	public void addPot(int num) {
 		m_pot += num;
+        setChanged();
 	}
 	
 	public void setPot(int num) {
@@ -69,6 +72,7 @@ public class Game extends Observable {
 	
 	public void setBet(int num) {
 		m_bet = num;
+        setChanged();
 	}
 	
 	public void resetBet() {
@@ -84,7 +88,7 @@ public class Game extends Observable {
 	}
 	
 	public void resetTurn() {
-		m_turn = m_dealerButton + 3;
+		m_turn = (m_dealerButton + 3) % m_players.size();
 	}
 	
 	public Player getCurrentPlayer() {
@@ -97,6 +101,7 @@ public class Game extends Observable {
 	
 	public void setSmallBlind(int num) {
 		m_smallBlind = num;
+        setChanged();
 	}
 	
 	public int getDealerButton() {

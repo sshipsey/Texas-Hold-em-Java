@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import com.sshipsey.holdem.models.*;
 import com.sshipsey.holdem.views.*;
 
-public class ApplicationController {
+public class ApplicationController extends BaseController {
 	
 	private MainView m_view;
 	
@@ -26,7 +26,7 @@ public class ApplicationController {
 		}
 		
 		Game model = new Game(players, smallBlind);
-		GameView view = (GameView) ViewFactory.createView(ViewFactory.View.GAME, model);
+		GameView view = (GameView) ViewFactory.createView(ViewFactory.View.GAME);
 		GameController controller = new GameController(model, view);
 		controller.start();
 	}

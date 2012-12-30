@@ -2,33 +2,33 @@ package com.sshipsey.holdem.views.console;
 
 import java.util.Scanner;
 
-public class BaseConsoleView {
+public abstract class BaseConsoleView {
 	
-	private final Scanner sc = new Scanner(System.in);
+	private static final Scanner SC = new Scanner(System.in);
 	
-	public void display(String message, Object... params) {
+	protected void display(String message, Object... params) {
 		System.out.println(String.format(message, params));
 	}
 	
-	public String prompt() {
+	protected String prompt() {
 		return prompt("");
 	}
 	
-	public String prompt(String prompt) {
+	protected String prompt(String prompt) {
 		System.out.print(prompt);
-		return sc.nextLine();
+		return SC.nextLine();
 	}
 	
-	public int promptInt() {
+	protected int promptInt() {
 		return promptInt("");
 	}
 	
-	public int promptInt(String prompt) {
+	protected int promptInt(String prompt) {
 		int value;
 		while(true) {
 			try {
 				System.out.print(prompt);
-				value = Integer.parseInt(sc.nextLine());
+				value = Integer.parseInt(SC.nextLine());
 				break;
 			}
 			catch(NumberFormatException ex) {
@@ -38,16 +38,49 @@ public class BaseConsoleView {
 		return value;
 	}
 	
-	public int promptIntRange(int min, int max) {
+	protected int promptIntRange(int min, int max) {
 		return promptIntRange("", min, max);
 	}
 	
-	public int promptIntRange(String prompt, int min, int max) {
+	protected int promptIntRange(String prompt, int min, int max) {
 		int value;
 		while(true) {
 			value = promptInt(prompt);
 			if(value < min || value > max)
 				display("Value must be between %d and %d", min, max);
+			else
+				break;
+		}
+		return value;
+	}
+	
+	protected char promptChar() {
+		return promptChar("");
+	}
+	
+	protected char promptChar(String prompt) {
+		String value;
+		while(true) {
+			System.out.print(prompt);
+			value = SC.nextLine().toLowerCase();
+			if(value.length() == 1)
+				break;
+			else
+				display("Value must be a single character");
+		}
+		return value.charAt(0);
+	}
+	
+	protected char promptCharRange(String validChars) {
+		return promptCharRange("", validChars);
+	}
+	
+	protected char promptCharRange(String prompt, String validChars) {
+		char value;
+		while(true) {
+			value = promptChar(prompt);
+			if(validChars.indexOf(value) == -1)
+				display("Value must be on of the following single characters [%s]", validChars);
 			else
 				break;
 		}

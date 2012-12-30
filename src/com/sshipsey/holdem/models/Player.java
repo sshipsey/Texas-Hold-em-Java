@@ -28,15 +28,17 @@ public class Player extends Observable {
     public void reset() {
     	m_folded = false;
     	m_hand.clear();
-    	m_bet = 0;
+    	resetBet();
     }
     
     public void addBank(int n) {
         m_bank += n;
+        setChanged();
     }
 
     public void removeBank(int n) {
         m_bank -= n;
+        setChanged();
     }
 
     public int getBank() {
@@ -45,6 +47,7 @@ public class Player extends Observable {
 
     public void deal(Card card) {
         m_hand.add(card);
+        setChanged();
     }
 
     public ArrayList<Card> getHand() {
@@ -57,6 +60,7 @@ public class Player extends Observable {
 
     public void fold() {
         m_folded = true;
+        setChanged();
     }
 
     public boolean isFolded() {
@@ -66,10 +70,15 @@ public class Player extends Observable {
     public void bet(int b) {
         removeBank(b);
         m_bet += b;
+        setChanged();
     }
-
+    
     public int getBet() {
     	return m_bet;
+    }
+    
+    public void resetBet() {
+    	m_bet = 0;
     }
 }
 

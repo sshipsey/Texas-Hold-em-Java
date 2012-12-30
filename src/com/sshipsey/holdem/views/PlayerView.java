@@ -1,6 +1,10 @@
 package com.sshipsey.holdem.views;
 
-import java.util.Observer;
-
-public interface PlayerView extends Observer {
+public interface PlayerView extends BaseView {
+	
+	public char getChoice(int currentBet, String validChoices);
+	
+	public int getPlayerBet();
+	
+	public int getPlayerRaise();
 }
