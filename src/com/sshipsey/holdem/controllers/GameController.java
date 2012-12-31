@@ -43,6 +43,7 @@ public class GameController extends BaseController {
 		bettingRound();
 		
 		assignWinner();
+		removeLosers();
 		
 		m_game.moveDealerButton();
 		m_game.resetAll();
@@ -116,6 +117,15 @@ public class GameController extends BaseController {
 	    int nextPot = m_game.getPot() % winners.size();
 		for(Player p : winners) p.addBank(splitPot);
 		m_game.setPot(nextPot);
+	}
+	
+	private void removeLosers() {
+	    for (Player p : m_game.getPlayers()) {
+	        if (p.getBank() == 0) {
+	            m_game.removePlayer(p);
+	            m_game.hasChanged();
+	        }
+	    }
 	}
 	
 	private int evaluateHand(ArrayList<Card> holeCards) {

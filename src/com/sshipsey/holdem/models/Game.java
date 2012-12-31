@@ -40,6 +40,9 @@ public class Game extends Observable {
 		for(Player p : m_players) p.reset();
 	}
 	
+	public void removePlayer(Player p) {
+	    m_players.remove(p);
+	}
 	public void addTableCard(Card card) {
 		m_tableCards.add(card);
         setChanged();
