@@ -20,7 +20,7 @@ public class ConsoleGameView extends BaseConsoleView implements GameView {
 		display("Game state updated: ");
 		display("  Current Blinds: %d/%d", m_game.getSmallBlind(), 2 * m_game.getSmallBlind());
 		display("  Current Pot: %d", m_game.getPot());
-		display("  Table Cards: %s", m_game.getTableCards());
+		display("  Table Cards: %s", m_game.displayTableCards());
 		display("  Current Bet: %d", m_game.getBet());
 	}
 }

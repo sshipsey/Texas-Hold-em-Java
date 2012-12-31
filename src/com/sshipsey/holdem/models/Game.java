@@ -48,7 +48,14 @@ public class Game extends Observable {
 	public ArrayList<Card> getTableCards() {
 		return m_tableCards;
 	}
-	
+	public String displayTableCards() {
+	    String retVal = "";
+	    for (int i = 0; i < m_tableCards.size(); ++i) {
+	        retVal += (m_tableCards.get(i) + " ");
+	    }
+	    return retVal.trim();
+	    
+	}
 	public void resetTableCards() {
 		m_tableCards.clear();
         setChanged();
@@ -129,7 +136,7 @@ public class Game extends Observable {
    }
    
    public void resetLeftToAct() {
-       m_leftToAct = m_players.size();
+       m_leftToAct = m_players.size() - 1;
    }
    
    public void resetAll() {
