@@ -61,7 +61,7 @@ public class ConsolePlayerView extends BaseConsoleView implements PlayerView {
 	
 	private void displayPlayer() {
 		display("  Bank: %d", m_player.getBank());
-		display("  Hole Cards: %s", m_player.getHand().toString());
+		display("  Hole Cards: %s", m_player.displayHoleCards());
 		if(m_player.isFolded())
 			display("  Currently Folded");
 		else

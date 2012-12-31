@@ -29,19 +29,27 @@ public class PlayerController extends BaseController {
 			bet = game.getBet() - m_player.getBet();
 			bet += m_view.getPlayerRaise();
 			game.setBet(bet);
+			game.resetLeftToAct();
 			break;
 		case 'b':
 			bet = m_view.getPlayerBet();
 			game.setBet(bet);
+			game.resetLeftToAct();
 			break;
 		case 'c':
 			bet = game.getBet() - m_player.getBet();
+			game.playerAct();
 			break;
+		case 'h':
+		    game.playerAct();
+		    break;
 		case 'f':
 			m_player.fold();
+			game.playerAct();
 			break;
 		}
 		m_player.bet(bet);
 		game.addPot(bet);
+
 	}
 }

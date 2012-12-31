@@ -70,7 +70,10 @@ public class GameController extends BaseController {
 			//        bet is 0.
 			// TODO: This whole logic is perhaps wrong. We need to do better.
 			// Determine if we can proceed
-			boolean bettingOver = true;
+			
+			boolean bettingOver = m_game.getNewDeal();
+			
+			/*
 			for(Player p : m_game.getPlayers()) {
 				if(p.isFolded()) continue;
 				if(p.getBet() != m_game.getBet()) {
@@ -78,8 +81,11 @@ public class GameController extends BaseController {
 					break;
 				}
 			}
+			*/
 			if(bettingOver) break;
+			
 		}
+		
 		m_game.resetBet();
 		m_game.resetTurn();
 		for(Player p : m_game.getPlayers()) p.resetBet();

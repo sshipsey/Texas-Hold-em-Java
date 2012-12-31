@@ -15,6 +15,7 @@ public class Game extends Observable {
 	private int m_turn;
 	private int m_smallBlind;
 	private int m_dealerButton;
+	private int m_leftToAct;
 	
 	public Game(ArrayList<Player> players, int smallBlind) {
 		m_players = players;
@@ -116,13 +117,29 @@ public class Game extends Observable {
 		m_dealerButton = index;
 	}
 	
+   public boolean getNewDeal() {
+       boolean retVal = false;
+       if(m_leftToAct == 0)
+           retVal = true;
+       return retVal;
+   }	
+   
+   public void playerAct() {
+       m_leftToAct--;
+   }
+   
+   public void resetLeftToAct() {
+       m_leftToAct = m_players.size();
+   }
+   
    public void resetAll() {
         resetPlayers();
         resetTableCards();
         resetBet();
         resetTurn();
+        resetLeftToAct();
     }
-   
+
 	private void initDealerButton() {
 		Random rnd = new Random();
 		m_dealerButton = rnd.nextInt(m_players.size());

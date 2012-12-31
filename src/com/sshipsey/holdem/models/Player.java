@@ -80,5 +80,9 @@ public class Player extends Observable {
     public void resetBet() {
     	m_bet = 0;
     }
+    public String displayHoleCards() {
+        String retVal = (getCard(0).toString() + " " + getCard(1).toString());
+        return retVal;
+    }
 }
 

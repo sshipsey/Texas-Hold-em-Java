@@ -20,11 +20,12 @@ public class ApplicationController extends BaseController {
 		int startBank = m_view.getStartBank();
 		int smallBlind = m_view.getSmallBlind();
 		
+		
+		
 		for(int i = 0; i < numPlayers; ++i) {
 			String name = m_view.getPlayerName(i);
 			players.add(new Player(name, startBank));
 		}
-		
 		Game model = new Game(players, smallBlind);
 		GameView view = (GameView) ViewFactory.createView(ViewFactory.View.GAME);
 		GameController controller = new GameController(model, view);
