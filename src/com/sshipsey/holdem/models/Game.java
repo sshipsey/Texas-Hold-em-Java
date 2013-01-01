@@ -9,6 +9,7 @@ import com.sshipsey.holdem.Card;
 public class Game extends Observable {
 	
 	private ArrayList<Player> m_players = new ArrayList<Player>();
+	private ArrayList<Player> m_livePlayers = new ArrayList<Player>();
 	private ArrayList<Card> m_tableCards = new ArrayList<Card>();
 	private int m_pot;
 	private int m_bet;
@@ -95,7 +96,7 @@ public class Game extends Observable {
 	}
 	
 	public void nextTurn() {
-		m_turn = (m_turn + 1) % m_players.size();
+		m_turn = (m_turn + 1) % m_livePlayers.size();
 	}
 	
 	public void resetTurn() {
@@ -133,13 +134,21 @@ public class Game extends Observable {
            retVal = true;
        return retVal;
    }	
-   
+   public int getLeftToAct() {
+       return m_leftToAct;
+   }
    public void playerAct() {
        m_leftToAct--;
    }
    
    public void resetLeftToAct() {
-       m_leftToAct = m_players.size() - 1;
+       if ((m_tableCards.isEmpty() && m_bet == (m_smallBlind * 2)) || m_bet == 0)
+           m_leftToAct = m_livePlayers.size();
+       else
+           m_leftToAct = m_livePlayers.size() - 1;
+   }
+   public void foldPlayer(Player p) {
+       m_livePlayers.remove(p);
    }
    
    public void resetAll() {
@@ -148,6 +157,7 @@ public class Game extends Observable {
         resetBet();
         resetTurn();
         resetLeftToAct();
+        m_livePlayers = m_players;
     }
 
 	private void initDealerButton() {

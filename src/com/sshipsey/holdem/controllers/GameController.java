@@ -58,7 +58,10 @@ public class GameController extends BaseController {
 				m_game.nextTurn();
 				continue;
 			}
-			
+			//For debugging - Display and allow user to follow the amount of
+			//players left to act
+	        System.out.println("Players left to act: " + m_game.getLeftToAct());
+	        
 			// Let player make a choice
 			makeCurrentPlayerChoice();
 			
@@ -71,7 +74,7 @@ public class GameController extends BaseController {
 			//        bet is 0.
 			// TODO: This whole logic is perhaps wrong. We need to do better.
 			// Determine if we can proceed
-			
+
 			boolean bettingOver = m_game.getNewDeal();
 			
 			/*
@@ -90,6 +93,7 @@ public class GameController extends BaseController {
 		m_game.resetBet();
 		m_game.resetTurn();
 		for(Player p : m_game.getPlayers()) p.resetBet();
+		m_game.resetLeftToAct();
 	}
 
 	private void makeCurrentPlayerChoice() {
@@ -150,6 +154,7 @@ public class GameController extends BaseController {
 		m_game.getPlayer((dealerButton + 2) % numPlayers).bet(2 * smallBlind);
 		m_game.addPot(3 * smallBlind);
 		m_game.setBet(2 * smallBlind);
+		m_game.resetLeftToAct();
 	}
 
 	private void dealHoleCards() {

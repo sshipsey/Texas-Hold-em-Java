@@ -19,8 +19,10 @@ public class PlayerController extends BaseController {
 		String validChoices = "f";
 		if(game.getBet() == 0)
 			validChoices += "bh";
-		else
+		else if(game.getBet() > m_player.getBet())
 			validChoices += "rc";
+		else
+		    validChoices += "rh";
 		
 		int bet = 0;
 		char choice = m_view.getChoice(game.getBet(), validChoices);
@@ -46,10 +48,10 @@ public class PlayerController extends BaseController {
 		case 'f':
 			m_player.fold();
 			game.playerAct();
+			game.foldPlayer(m_player);
 			break;
 		}
 		m_player.bet(bet);
 		game.addPot(bet);
-
 	}
 }
