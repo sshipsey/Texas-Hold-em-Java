@@ -96,7 +96,8 @@ public class Game extends Observable {
 	}
 	
 	public void nextTurn() {
-		m_turn = (m_turn + 1) % m_livePlayers.size();
+	    if (m_livePlayers.size() > 0)
+	        m_turn = (m_turn + 1) % m_livePlayers.size();
 	}
 	
 	public void resetTurn() {
@@ -128,28 +129,27 @@ public class Game extends Observable {
 		m_dealerButton = index;
 	}
 	
-   public boolean getNewDeal() {
-       boolean retVal = false;
-       if(m_leftToAct == 0)
-           retVal = true;
-       return retVal;
-   }	
-   public int getLeftToAct() {
-       return m_leftToAct;
-   }
-   public void playerAct() {
-       m_leftToAct--;
-   }
-   
-   public void resetLeftToAct() {
-       if ((m_tableCards.isEmpty() && m_bet == (m_smallBlind * 2)) || m_bet == 0)
-           m_leftToAct = m_livePlayers.size();
-       else
-           m_leftToAct = m_livePlayers.size() - 1;
-   }
-   public void foldPlayer(Player p) {
-       m_livePlayers.remove(p);
-   }
+	public boolean getNewDeal() {
+	    boolean retVal = false;
+	    if(m_leftToAct == 0)
+	        retVal = true;
+	    return retVal;
+	}	
+	public int getLeftToAct() {
+	    return m_leftToAct;
+	}
+	public void playerAct() {
+	    m_leftToAct--;
+	}
+	public void resetLeftToAct() {
+	    if ((m_tableCards.isEmpty() && m_bet == (m_smallBlind * 2)) || m_bet == 0)
+	        m_leftToAct = m_livePlayers.size();
+	    else
+	        m_leftToAct = m_livePlayers.size() - 1;
+	}
+	public void foldPlayer(Player p) {
+	    m_livePlayers.remove(p);
+    }
    
    public void resetAll() {
         resetPlayers();

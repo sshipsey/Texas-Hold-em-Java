@@ -14,44 +14,43 @@ public class PlayerController extends BaseController {
 		m_player = player;
 		m_view = view;
 	}
-	
 	public void makeChoice(Game game) {
-		String validChoices = "f";
-		if(game.getBet() == 0)
-			validChoices += "bh";
-		else if(game.getBet() > m_player.getBet())
-			validChoices += "rc";
-		else
-		    validChoices += "rh";
+	    String validChoices = "f";
+	    if(game.getBet() == 0)
+	        validChoices += "bh";
+	    else if(game.getBet() > m_player.getBet())
+	        validChoices += "rc";
+	    else
+	        validChoices += "rh";
 		
-		int bet = 0;
-		char choice = m_view.getChoice(game.getBet(), validChoices);
-		switch(choice) {
-		case 'r':
-			bet = game.getBet() - m_player.getBet();
-			bet += m_view.getPlayerRaise();
-			game.setBet(bet);
-			game.resetLeftToAct();
-			break;
-		case 'b':
-			bet = m_view.getPlayerBet();
-			game.setBet(bet);
-			game.resetLeftToAct();
-			break;
-		case 'c':
-			bet = game.getBet() - m_player.getBet();
-			game.playerAct();
-			break;
-		case 'h':
-		    game.playerAct();
-		    break;
-		case 'f':
-			m_player.fold();
-			game.playerAct();
-			game.foldPlayer(m_player);
-			break;
-		}
-		m_player.bet(bet);
-		game.addPot(bet);
+	    int bet = 0;
+	    char choice = m_view.getChoice(game.getBet(), validChoices);
+	    switch(choice) {
+	    case 'r':
+	        bet = game.getBet() - m_player.getBet();
+	        bet += m_view.getPlayerRaise();
+	        game.setBet(bet);
+	        game.resetLeftToAct();
+	        break;
+	    case 'b':
+	        bet = m_view.getPlayerBet();
+	        game.setBet(bet);
+	        game.resetLeftToAct();
+	        break;
+	    case 'c':
+	        bet = game.getBet() - m_player.getBet();
+	        game.playerAct();
+	        break;
+	    case 'h':
+	        game.playerAct();
+	        break;
+	    case 'f':
+	        m_player.fold();
+	        game.playerAct();
+	        game.foldPlayer(m_player);
+	        break;
+	    }
+	    m_player.bet(bet);
+	    game.addPot(bet);
 	}
 }

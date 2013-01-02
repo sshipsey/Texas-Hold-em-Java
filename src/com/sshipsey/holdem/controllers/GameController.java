@@ -54,8 +54,9 @@ public class GameController extends BaseController {
 			Player currentPlayer = m_game.getCurrentPlayer();
 			
 			// Skip folded players
-			if(currentPlayer.isFolded()) {
-				m_game.nextTurn();
+			if(currentPlayer.isFolded() || currentPlayer.isAllIn()) {
+				m_game.foldPlayer(currentPlayer);
+			    m_game.nextTurn();
 				continue;
 			}
 			//For debugging - Display and allow user to follow the amount of
@@ -74,6 +75,8 @@ public class GameController extends BaseController {
 			//        bet is 0.
 			// TODO: This whole logic is perhaps wrong. We need to do better.
 			// Determine if we can proceed
+			
+			// I believe this is fixed
 
 			boolean bettingOver = m_game.getNewDeal();
 			

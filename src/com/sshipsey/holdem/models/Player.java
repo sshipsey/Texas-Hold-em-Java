@@ -66,11 +66,17 @@ public class Player extends Observable {
     public boolean isFolded() {
         return m_folded;
     }
+    public boolean isAllIn() {
+        if (m_bank == 0)
+            return true;
+        else
+            return false;
+    }
 
     public void bet(int b) {
-        removeBank(b);
-        m_bet += b;
-        setChanged();
+            removeBank(b);
+            m_bet += b;
+            setChanged();
     }
     
     public int getBet() {
