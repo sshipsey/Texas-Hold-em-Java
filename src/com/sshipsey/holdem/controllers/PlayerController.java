@@ -47,10 +47,12 @@ public class PlayerController extends BaseController {
 	    case 'f':
 	        m_player.fold();
 	        game.playerAct();
-	        game.foldPlayer(m_player);
 	        break;
 	    }
 	    m_player.bet(bet);
-	    game.addPot(bet);
+	    game.addPot(bet);        
+	    if (m_player.isAllIn())
+            game.removeLivePlayer(m_player);
+	    System.out.println(m_player.getName() + " is all in:" + m_player.isAllIn());
 	}
 }

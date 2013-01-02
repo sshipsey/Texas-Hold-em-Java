@@ -31,16 +31,20 @@ public class GameController extends BaseController {
 		m_deck.shuffle();
 		anteUp();
 		dealHoleCards();
-		bettingRound();
+		if(m_game.getLivePlayers().size() > 0)
+		    bettingRound();
 		
 		burnAndTurn(3);
-		bettingRound();
+		if(m_game.getLivePlayers().size() > 0)
+		    bettingRound();
 		
 		burnAndTurn(1);
-		bettingRound();
+		if(m_game.getLivePlayers().size() > 0)
+		    bettingRound();
 		
 		burnAndTurn(1);
-		bettingRound();
+		if(m_game.getLivePlayers().size() > 0)
+		    bettingRound();
 		
 		assignWinner();
 		removeLosers();
@@ -55,8 +59,8 @@ public class GameController extends BaseController {
 			
 			// Skip folded players
 			if(currentPlayer.isFolded() || currentPlayer.isAllIn()) {
-				m_game.foldPlayer(currentPlayer);
 			    m_game.nextTurn();
+			    System.out.println(currentPlayer.getName() + " is all in/folded");
 				continue;
 			}
 			//For debugging - Display and allow user to follow the amount of
@@ -66,8 +70,6 @@ public class GameController extends BaseController {
 			// Let player make a choice
 			makeCurrentPlayerChoice();
 			
-			// Move to next player			
-			m_game.nextTurn();
 			
 			// TODO: This malfunctions pre-flop. How to fix?
 			// TODO: This malfunctions post-flop if the player in first position checks
@@ -78,19 +80,11 @@ public class GameController extends BaseController {
 			
 			// I believe this is fixed
 
-			boolean bettingOver = m_game.getNewDeal();
+			if(m_game.getNewDeal()) break;
 			
-			/*
-			for(Player p : m_game.getPlayers()) {
-				if(p.isFolded()) continue;
-				if(p.getBet() != m_game.getBet()) {
-					bettingOver = false;
-					break;
-				}
-			}
-			*/
-			if(bettingOver) break;
-			
+	        // Move to next player          
+            m_game.nextTurn();
+			System.out.println("It is now " + m_game.getCurrentPlayer().getName() + "'s turn");
 		}
 		
 		m_game.resetBet();

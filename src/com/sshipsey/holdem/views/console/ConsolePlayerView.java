@@ -66,5 +66,7 @@ public class ConsolePlayerView extends BaseConsoleView implements PlayerView {
 			display("  Currently Folded");
 		else
 			display("  Current Bet: %d", m_player.getBet());
+		if (m_player.isAllIn())
+		    display("  Currently All in");
 	}
 }

@@ -44,6 +44,7 @@ public class Game extends Observable {
 	public void removePlayer(Player p) {
 	    m_players.remove(p);
 	}
+
 	public void addTableCard(Card card) {
 		m_tableCards.add(card);
         setChanged();
@@ -52,6 +53,7 @@ public class Game extends Observable {
 	public ArrayList<Card> getTableCards() {
 		return m_tableCards;
 	}
+
 	public String displayTableCards() {
 	    String retVal = "";
 	    for (int i = 0; i < m_tableCards.size(); ++i) {
@@ -60,6 +62,7 @@ public class Game extends Observable {
 	    return retVal.trim();
 	    
 	}
+
 	public void resetTableCards() {
 		m_tableCards.clear();
         setChanged();
@@ -134,24 +137,32 @@ public class Game extends Observable {
 	    if(m_leftToAct == 0)
 	        retVal = true;
 	    return retVal;
-	}	
+	}
+	
 	public int getLeftToAct() {
 	    return m_leftToAct;
 	}
+	
 	public void playerAct() {
 	    m_leftToAct--;
 	}
+
 	public void resetLeftToAct() {
 	    if ((m_tableCards.isEmpty() && m_bet == (m_smallBlind * 2)) || m_bet == 0)
 	        m_leftToAct = m_livePlayers.size();
 	    else
 	        m_leftToAct = m_livePlayers.size() - 1;
 	}
-	public void foldPlayer(Player p) {
+
+	public void removeLivePlayer(Player p) {
 	    m_livePlayers.remove(p);
     }
+
+	public ArrayList<Player> getLivePlayers() {
+	    return m_livePlayers;
+	}
    
-   public void resetAll() {
+	public void resetAll() {
         resetPlayers();
         resetTableCards();
         resetBet();
@@ -164,4 +175,5 @@ public class Game extends Observable {
 		Random rnd = new Random();
 		m_dealerButton = rnd.nextInt(m_players.size());
 	}
+
 }

@@ -12,12 +12,14 @@ public class Player extends Observable {
     private ArrayList<Card> m_hand;
     private boolean m_folded;
     private int m_bet;
+    private boolean m_allIn;
 
     public Player(String name, int startBank) {
         m_name = name;
         m_bank = startBank;
         m_hand = new ArrayList<Card>();
         m_folded = false;
+        m_allIn = false;
         m_bet = 0;
     }
 
@@ -66,16 +68,16 @@ public class Player extends Observable {
     public boolean isFolded() {
         return m_folded;
     }
+
     public boolean isAllIn() {
-        if (m_bank == 0)
-            return true;
-        else
-            return false;
+        return m_allIn;
     }
 
     public void bet(int b) {
             removeBank(b);
             m_bet += b;
+            if (getBank() == 0)
+                m_allIn = true;
             setChanged();
     }
     
@@ -86,6 +88,7 @@ public class Player extends Observable {
     public void resetBet() {
     	m_bet = 0;
     }
+
     public String displayHoleCards() {
         String retVal = (getCard(0).toString() + " " + getCard(1).toString());
         return retVal;
