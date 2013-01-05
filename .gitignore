@@ -14,3 +14,4 @@ handranks.dat
 bin/*
 *.project
 *.classpath
+.metadata/*
